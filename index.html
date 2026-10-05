@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СПА-Салон МАСАЛА | Уход, Спа, Массаж</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #150721;
+            --bg-card: rgba(43, 15, 58, 0.8);
+            --gold: #d4af37;
+            --gold-light: #f3d88e;
+            --text-main: #f4f4f4;
+            --text-muted: #cbb5d4;
+            --purple-accent: #4a1c63;
+            --border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #2a0e3b 50%, var(--purple-accent) 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(21, 7, 33, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--gold-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #fff;
+            border-bottom: 1px solid var(--gold);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 50px 0 30px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        /* Sections */
+        section {
+            padding: 40px 0;
+            scroll-margin-top: 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--gold);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .subsection-title {
+            font-size: 1.8rem;
+            color: var(--gold-light);
+            margin: 30px 0 20px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Cards & Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /* Стили для карточки-ссылки */
+        .card {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--gold-light);
+            margin-bottom: 5px;
+        }
+
+        .card-price {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+
+        .card-time {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            color: #e0d0e8;
+            font-style: italic;
+        }
+
+        .card-list {
+            list-style: none;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .card-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #ddd;
+        }
+
+        .card-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-size: 1.2rem;
+            line-height: 1;
+            top: 0px;
+        }
+
+        /* Кнопка "Записаться" внутри карточки */
+        .card-action {
+            margin-top: auto;
+            padding-top: 15px;
+            text-align: center;
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 0.9rem;
+            border: 1px solid var(--gold);
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card:hover .card-action {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+
+        /* Contacts Section */
+        .contacts {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contacts h3 {
+            font-size: 2.2rem;
+            color: var(--gold-light);
+            margin-bottom: 30px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .contact-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+            transform: scale(1.05);
+        }
+
+        .footer-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo { font-size: 2.2rem; }
+            .section-title { font-size: 2rem; }
+            nav ul { gap: 10px; }
+            nav a { font-size: 0.75rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигация -->
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#spa-programs">Спа-программы</a></li>
+                <li><a href="#body">Тело</a></li>
+                <li><a href="#face">Лицо</a></li>
+                <li><a href="#massage">Массаж</a></li>
+                <li><a href="#spa-services">Услуги</a></li>
+                <li><a href="#rent">Аренда</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Шапка -->
+        <header>
+            <div class="logo">МАСАЛА</div>
+            <div class="tagline">уход • спа • массаж</div>
+        </header>
+
+        <!-- Секция: СПА-ПРОГРАММЫ -->
+        <section id="spa-programs">
+            <h2 class="section-title">Спа-программы</h2>
+            <div class="grid">
+                <!-- MINI -->
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">MINI</h3>
+                        <div>
+                            <div class="card-time">1ч. 40м.</div>
+                            <div class="card-price">4000 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Лёгкое обновление тела. Программа ухода для тех, кто ценит быстрый и качественный отдых.</div>
+                    <ul class="card-list">
+                        <li>Прогревание в сауне (20 мин)</li>
+                        <li>Скрабирование тела с ароматным составом (20 мин)</li>
+                        <li>Расслабляющий массаж (30 мин)</li>
+                        <li>Душевые процедуры и чай со сладким комплиментом</li>
+                    </ul>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <!-- MIDI -->
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">MIDI</h3>
+                        <div>
+                            <div class="card-time">2ч. 30м.</div>
+                            <div class="card-price">6900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Полный уход за телом и лицом. Комплексный уход, включающий как заботу о теле, так и лице.</div>
+                    <ul class="card-list">
+                        <li>Прогревание в сауне (20 мин)</li>
+                        <li>Скрабирование тела (20 мин)</li>
+                        <li>Питательная маска-обертывание (30 мин)</li>
+                        <li>Массаж тела и лица (30 мин)</li>
+                        <li>Маски для лица и волос, уход с парафином для рук и стоп</li>
+                        <li>Душевые процедуры и чай со сладким комплиментом</li>
+                    </ul>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <!-- MAXI -->
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">MAXI</h3>
+                        <div>
+                            <div class="card-time">3ч. 30м.</div>
+                            <div class="card-price">9800 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Абсолютное восстановление и перезарядка. Уход для настоящих ценителей глубокого расслабления.</div>
+                    <ul class="card-list">
+                        <li>Прогревание в сауне с витаминным напитком (30 мин)</li>
+                        <li>Скрабирование тела (20 мин)</li>
+                        <li>Пилинг лица и кожи головы (20 мин)</li>
+                        <li>Питательная маска-обертывание (30 мин)</li>
+                        <li>Расслабляющий массаж тела (60 мин)</li>
+                        <li>Горячие стоун камни (10 мин)</li>
+                        <li>Маски для лица и волос, уход с парафином для рук и стоп</li>
+                        <li>Душевые процедуры и чай со сладким комплиментом</li>
+                    </ul>
+                    <div class="card-action">Записаться</div>
+                </a>
+                
+                <!-- Антистресс -->
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Антистресс</h3>
+                        <div>
+                            <div class="card-time">2ч. 30м.</div>
+                            <div class="card-price">8700 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Программа, направленная на снятие стресса, напряжения и восстановление внутренней гармонии.</div>
+                    <ul class="card-list">
+                        <li>Прогревание в сауне с ароматерапией (20 мин)</li>
+                        <li>Расслабляющий массаж с натуральными маслами (60 мин)</li>
+                        <li>Ручной массаж тела с эвкалиптовым маслом (20 мин)</li>
+                        <li>Обертывание с витаминной маской (30 мин)</li>
+                        <li>Увлажняющая маска для лица (20 мин)</li>
+                        <li>Чайная церемония с травяными чаями и сладким комплиментом</li>
+                    </ul>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <!-- Цитрусовый бриз -->
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Цитрусовый бриз</h3>
+                        <div>
+                            <div class="card-time">2ч. 30м.</div>
+                            <div class="card-price">5800 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Яркое и освежающее спа-путешествие, которое подарит вам заряд бодрости и энергии!</div>
+                    <ul class="card-list">
+                        <li>Прогревание в сауне с цитрусовыми маслами (20 мин)</li>
+                        <li>Пилинг тела с цитрусовыми маслами (20 мин)</li>
+                        <li>Обертывание с витаминной маской (30 мин)</li>
+                        <li>Расслабляющий массаж с ароматами лимона и апельсина (60 мин)</li>
+                        <li>Освежающая маска для лица (20 мин)</li>
+                        <li>Чайная церемония с цитрусовым напитком и фруктами</li>
+                    </ul>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <!-- С днем рождения -->
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">С днем рождения</h3>
+                        <div>
+                            <div class="card-time">3ч. 30м.</div>
+                            <div class="card-price">7500 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Праздник для души и тела! Спа-программа, которая сделает ваш день незабываемым и особенным!</div>
+                    <ul class="card-list">
+                        <li>Прогревание в сауне с ароматами роз и ванили (20 мин)</li>
+                        <li>Скрабирование тела для мягкости и свежести (20 мин)</li>
+                        <li>Обертывание с увлажняющим составом (30 мин)</li>
+                        <li>Массаж всего тела с ароматными маслами (60 мин)</li>
+                        <li>Парафинотерапия для рук и стоп (20 мин)</li>
+                        <li>Чайная церемония с шампанским или фруктовым чаем</li>
+                    </ul>
+                    <div class="card-action">Записаться</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Секция: ТЕЛО -->
+        <section id="body">
+            <h2 class="section-title">Стройное тело</h2>
+            <div class="grid">
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Антицеллюлитный массаж</h3>
+                        <div>
+                            <div class="card-time">30/60 мин</div>
+                            <div class="card-price">1750/3250 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Массаж проводится на отдельные зоны для глубокой проработки особенных участков. Интенсивная проработка проблемных зон для заметного уменьшения объемов и подтяжки кожи. Глубокие ручные техники помогают разбить жировые отложения и ускорить лимфоток. Идеально для борьбы с целлюлитом и дряблостью кожи.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Вакуумный аппаратный массаж</h3>
+                        <div>
+                            <div class="card-time">20 мин</div>
+                            <div class="card-price">900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Вакуум глубоко прорабатывает жировые отложения, ускоряет лимфоток и делает кожу более упругой. Отличный старт для похудения, борьбы с целлюлитом и отеками. Можно выбрать зоны для особенной проработки и преображения.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Миостимуляция</h3>
+                        <div>
+                            <div class="card-time">1 зона / 3 зоны</div>
+                            <div class="card-price">950 / 2300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Революционная технология преображения без усилий! Наша миостимуляция — это электростимуляция, при которой мышцы сокращаются под воздействием импульсов. За одну процедуру ваше тело получает эффект как от нескольких часов в спортзале. Идеально для занятых людей, которые мечтают о подтянутом силуэте без изнурительных тренировок!</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">RF - лифтинг тела</h3>
+                        <div>
+                            <div class="card-time">40м. / 60м.</div>
+                            <div class="card-price">2300 / 3100 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Процедура направлена на омоложение кожи, устранение морщин, подтяжку овала лица. RF-лифтинг — это инновационная процедура омоложения, которая запускает естественные процессы регенерации. Глубокое прогревание тканей стимулирует выработку коллагена и эластина, благодаря чему кожа становится более упругой и подтянутой. Процедура эффективно борется с дряблостью, целлюлитом и возрастными изменениями.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Вакуумный аппаратный уход за телом + маска под пленку + прогревание тела в ИК-одеяле</h3>
+                        <div>
+                            <div class="card-time">60 мин.</div>
+                            <div class="card-price">2300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Идеальное решение в одной процедуре! Начинаем с глубокого вакуумного массажа, который разбивает жировые отложения и улучшает кровообращение. Затем наносим активно маску под пленку, насыщая кожу питательными веществами. Завершающий этап — уютное ИК-одеяло, которое усиливает проникновение полезных компонентов и запускает процессы детоксикации. Результат — гладкая, подтянутая кожа, уменьшение объемов и ощущение невероятной легкости!</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Диодный липолазер</h3>
+                        <div>
+                            <div class="card-time">30 мин.</div>
+                            <div class="card-price">900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Точный удар по упрямым жировым отложениям! Липолазер — это инновационная безоперационная методика, которая буквально расплавляет жировые клетки в проблемных зонах. Лазерное излучение проникает глубоко в ткани, разрушая мембраны жировых клеток и превращая их содержимое в жидкость, которая естественным образом выводится организмом. Заметные результаты уже после первой процедуры — ваше тело становится стройнее и подтянутее!</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Карамельная липосакция тела</h3>
+                        <div>
+                            <div class="card-time">60 мин.</div>
+                            <div class="card-price">3500 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Сладкий путь к совершенству! Карамельная липосакция — это эффективная процедура для моделирования контуров тела. Специальный состав на основе меда, сахара и натуральных масел наносится на кожу, после чего мастер выполняет особые массажные движения. Такой подход позволяет эффективно бороться с целлюлитом, выводить токсины и моделировать силуэт. Кожа становится невероятно гладкой, шелковистой и подтянутой.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Прессотерапия</h3>
+                        <div>
+                            <div class="card-time">30мин/45мин</div>
+                            <div class="card-price">900 / 1500 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Прессотерапия — это современный метод лимфодренажного массажа с использованием специального костюма с воздушными камерами. Последовательная компрессия тканей улучшает лимфоток, выводит лишнюю жидкость и токсины, уменьшает отечность и тяжесть в теле.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+                
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Вакуумный аппаратный уход за телом + охлаждающий крем</h3>
+                        <div>
+                            <div class="card-time">40 мин.</div>
+                            <div class="card-price">2300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Вакуумно-роликовый массаж эффективно разбивает жировые отложения и целлюлит, а специальный крем под пленкой усиливает эффект в несколько раз. Охлаждающий крем снимает отеки и тонизирует кожу. Эта процедура — настоящий архитектор вашей фигуры, моделирующий силуэт и возвращающий коже упругость!</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Кавитация</h3>
+                        <div>
+                            <div class="card-time">20 мин 10*10см</div>
+                            <div class="card-price">1400 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Похудение разрушение жировых отложений без операции! Ультразвуковая кавитация — это эстетический метод борьбы с жировыми ловушками в конкретной зоне размером 10*10 см. За 20 минут процедуры ультразвуковые волны разрушают жировые клетки, превращая их в эмульсию, которая естественным образом выводится из организма. Идеально для проработки "упрямых" зон, которые не поддаются диетам и физическим нагрузкам!</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Микротоки перчатки</h3>
+                        <div>
+                            <div class="card-time">20 мин / 40 мин</div>
+                            <div class="card-price">1400 / 2300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Нежное пробуждение красоты вашего тела! Процедура с использованием микротоков — это деликатный массаж с лечебным эффектом. Слабые электрические импульсы проникают в глубокие слои кожи, улучшая клеточный метаболизм, укрепляя мышцы и способствуя лимфодренажу. Кожа мгновенно подтягивается, становится более гладкой и упругой.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Фонофорез для тела</h3>
+                        <div>
+                            <div class="card-time">20 мин</div>
+                            <div class="card-price">900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Глубокое очищение и обновление на клеточном уровне! Ультразвук проникает в самые глубокие слои кожи. Ультразвуковые волны создают эффект микромассажа, улучшая микроциркуляцию, активизируя метаболизм и способствуя расщеплению жировых отложений.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Секция: ЛИЦО -->
+        <section id="face">
+            <h2 class="section-title">Красивое лицо</h2>
+            <div class="grid">
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Комплекс «Сияние кожи»</h3>
+                        <div>
+                            <div class="card-time">60м.</div>
+                            <div class="card-price">2900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">В программу входит: дезинкрустация, УЗ-чистка, фонофорез по выбранной сыворотке, альгинатная маска. Идеально для тех, кто хочет избавиться от загрязнений, очистить кожу от токсинов и увлажненную здоровую кожу. Вы получите сияние кожи благодаря глубокому уходу.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Комплекс «Фарфоровая куколка»</h3>
+                        <div>
+                            <div class="card-time">120м.</div>
+                            <div class="card-price">4400 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">В программу входит: дезинкрустация, пилинг, холодное гидрирование, УЗ-чистка, фонофорез по выбранной сыворотке, альгинатная маска, LED-маска, SPF-крем. Тщательная чистка лица от загрязнений, токсинов и ороговевших клеток позволяет улучшить эффект от глубокого ухода и продлить его действие, вы получаете идеальную кожу без макияжа!</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">RF-лифтинг лица и шеи + успокаивающая маска</h3>
+                        <div>
+                            <div class="card-time">Лицо 2200₽ / Декольте 1200₽ / Шея 950₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Процедура направлена на омоложение кожи, устранение морщин, подтяжку овала лица. RF-лифтинг — это инновационная процедура омоложения, которая запускает естественные процессы регенерации. Глубокое прогревание тканей стимулирует выработку коллагена и эластина.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Массаж лица + мышцы грудной клетки, шея, голова</h3>
+                        <div>
+                            <div class="card-time">60м.</div>
+                            <div class="card-price">2900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Направлен на подтяжку лица, снятие челюстных зажимов, устранение морщин, улучшение кровотока и лимфотока. Массаж лица снимает усталость, выравнивает мимические изменения кожи и придает вам отдохнувший вид.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Шоколадная омолаживающая маска + уход</h3>
+                        <div>
+                            <div class="card-time">40 мин.</div>
+                            <div class="card-price">1200 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Настоящий спа-десерт для вашей кожи! Натуральное какао насыщает кожу антиоксидантами, улучшает цвет лица и заметно подтягивает. Уход дополняет эффект — кожа становится мягкой, напитанной и сияющей как после отпуска.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">УЗ-чистка лица + многоэтапный уход</h3>
+                        <div>
+                            <div class="card-time">120 мин.</div>
+                            <div class="card-price">4000 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Глубокое очищение кожи от загрязнений и токсинов, мощный лифтинг-эффект, уменьшение воспалительных процессов, удаление комедонов. Комплексный многоэтапный уход за лицом и зоной декольте напитывает и глубоко увлажняет кожу, делает ее наполненной и сияющей, снимает стресс и усталость, возвращает молодость и сияние коже!</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Энзимный пилинг лица</h3>
+                        <div>
+                            <div class="card-time">15 мин.</div>
+                            <div class="card-price">600 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Мягкое, но эффективное обновление кожи с помощью натуральных ферментов. Выравнивает тон, очищает и делает кожу сияющей без раздражений.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Массаж гуаша</h3>
+                        <div>
+                            <div class="card-time">60 мин.</div>
+                            <div class="card-price">2900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Шея, воротниковая зона, голова, лицо. Древняя техника с использованием каменного скребка для стимуляции циркуляции крови и лимфы. Улучшает тонус кожи.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Буккальный массаж лица + маска</h3>
+                        <div>
+                            <div class="card-time">90м.</div>
+                            <div class="card-price">3700 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">(Массаж стоп, шв. головы и лица буккальными техниками + альгинатная маска) Уникальная техника, которая прорабатывает глубоко проваливает мышцы лица изнутри и снаружи. Снимает спазмы, подтягивает овал и разглаживает морщины без уколов. Лицо становится свежим, скульптурным и сияющим, это глубокая и эффективная техника, направленная на улучшение контуров лица, снятие напряжения и улучшение тонуса мышц.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Массаж головы тёплым ароматным маслом</h3>
+                        <div>
+                            <div class="card-time">30м.</div>
+                            <div class="card-price">2300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Этот массаж — настоящее спасение от стресса, головных болей и проблем со сном. Он улучшает состояние волос, активизирует кровообращение в коже головы и дарит потрясающее ощущение умиротворения и покоя. 30 минут райского наслаждения! Массаж оказывает расслабляющий эффект, способствуя снятию стресса и усталости.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Секция: МАССАЖ -->
+        <section id="massage">
+            <h2 class="section-title">Ручной массаж</h2>
+            <div class="grid">
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Ручной массаж тела</h3>
+                        <div>
+                            <div class="card-time">30/60/90/120 мин</div>
+                            <div class="card-price">1700 / 2900 / 4500 / 5500 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Массаж проводится легкими, поглаживающими, скользящими движениями. Снимает физическое и эмоциональное напряжение, улучшает сон, помогает расслабиться, стать более осознанным. Вы можете выбрать зоны для особенной проработки и интенсивность массажа с мастером.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Императорский массаж огнем</h3>
+                        <div>
+                            <div class="card-time">30 мин.</div>
+                            <div class="card-price">2300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Экзотический ритуал преображения, достойный царских особ! Этот уникальный массаж сочетает элементы восточных техник с огненной терапией. Мастер виртуозно управляет пламенем, создавая волны тепла, которые проникают глубоко в ткани, расслабляют мышцы, улучшают циркуляцию крови и активизируют обменные процессы. Процедура обладает мощным детокс-эффектом и антивозрастным эффектом.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Медовый массаж</h3>
+                        <div>
+                            <div class="card-time">1 час</div>
+                            <div class="card-price">3500 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Улучшает кровообращение, питает кожу, эффективен при простудах, устраняет целлюлит, подтягивает кожу, создает лифтинг-эффект. Мед проникает глубоко в ткани и действует как сорбент, поглощая накопившиеся токсины. Вы буквально чувствуете, как мед вбирает в себя все негативное, оставляя только ощущение чистоты, легкости и обновления.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Тейпирование после массажа 1 зона</h3>
+                        <div>
+                            <div class="card-time">10 мин</div>
+                            <div class="card-price">250 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Эффективное завершение после массажа — фиксирует результат, снимает отеки и поддерживает мышцы. Идеально при усталости или физических нагрузках.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Стоун массаж по маслу</h3>
+                        <div>
+                            <div class="card-time">60 мин.</div>
+                            <div class="card-price">3300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Энергия камней для совершенства тела! Стоун массаж — это древняя практика, в которой используются гладкие горячие камни вулканического происхождения. Мастер виртуозно комбинирует классические массажные техники с воздействием камней разной температуры. Тепло камней глубоко проникает в ткани, расслабляет мышцы, улучшает циркуляцию крови и лимфы, активизирует обмен веществ. Процедура не только помогает корректировать фигуру, но и восстанавливает энергетический баланс, снимает стресс и усталость.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Чубо (по точкам)</h3>
+                        <div>
+                            <div class="card-time">60 мин.</div>
+                            <div class="card-price">3450 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Путь к красоте через энергетические каналы! Чубо — это японская точечная терапия, основанная на воздействии на конкретные точки тела для улучшения энергетических потоков. Мастер точно определяет и прорабатывает именно те точки, которые отвечают за ваши индивидуальные проблемы. Процедура способствует улучшению метаболизма, снятию мышечных зажимов, выведению токсинов и гармонизации работы внутренних органов. Эффект заметен не только внешне — улучшается общее самочувствие, повышается жизненный тонус.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Расслабляющий индийский массаж "шанти-шанти"</h3>
+                        <div>
+                            <div class="card-time">120 мин.</div>
+                            <div class="card-price">6900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Двухчасовое путешествие в мир абсолютной гармонии и блаженства! "Шанти-шанти" в переводе с санскрита означает "мир, покой", и это именно то, что вы получите от этого удивительного массажа. Мастер использует уникальную комбинацию техник, основанных на древних ведических традициях: плавные, текучие движения, глубокая проработка мышц и воздействие на энергетические точки. Массаж выполняется с использованием теплых ароматических масел, подобранных индивидуально для вас.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Вакуумно-баночный ручной массаж тела</h3>
+                        <div>
+                            <div class="card-time">60мин.</div>
+                            <div class="card-price">2300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Древние традиции на службе современной красоты! Наш вакуумно-баночный массаж — это сочетание восточной мудрости и современных технологий. Массажист виртуозно управляет силой вакуума, создавая то интенсивное, то мягкое воздействие на ткани. Процедура улучшает кровообращение, разбивает жировые отложения, выводит токсины и лишнюю жидкость. Результат — подтянутое тело, гладкая кожа и невероятное ощущение легкости. Особенно эффективен при целлюлите и дряблости кожи.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Хаси — китайские магнитные баночки</h3>
+                        <div>
+                            <div class="card-time">60мин.</div>
+                            <div class="card-price">3500 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Секрет красоты императорских наложниц! Хаси — это уникальная методика, пришедшая к нам из древнего Китая. Магнитные баночки создают особое энергетическое поле, которое гармонизирует потоки энергии в теле, стимулирует акупунктурные точки и активизирует процессы самовосстановления. Процедура не только улучшает контуры тела, но и восстанавливает энергетический баланс, снимает стресс и усталость. После сеанса вы почувствуете прилив сил и глубокое расслабление.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Моксы — полынные палочки работа по точкам</h3>
+                        <div>
+                            <div class="card-time">60мин.</div>
+                            <div class="card-price">4400 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Огненное тепло для гармонии тела и души! Моксотерапия — это древнейшая восточная методика, основанная на прогревании биологически активных точек тлеющими полынными палочками. Тепло и целебные компоненты полыни проникают глубоко в ткани, устраняя энергетические блоки, улучшая циркуляцию крови и лимфы, активизируя обмен веществ. Процедура особенно эффективна при целлюлите, застойных явлениях и мышечных болях. Почувствуйте, как тепло моксы растворяет напряжение и наполняет тело энергией!</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+            </div>
+
+            <h3 class="subsection-title">Мужской прайс</h3>
+            <div class="grid">
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Ручной массаж тела (Мужской)</h3>
+                        <div>
+                            <div class="card-time">30/60/90/120 мин</div>
+                            <div class="card-price">1700 / 2900 / 4500 / 5500 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Массаж проводится легкими, поглаживающими, скользящими движениями. Снимает физическое и эмоциональное напряжение, улучшает сон, помогает расслабиться, стать более осознанным. Вы можете выбрать зоны для особенной проработки и интенсивность массажа с мастером.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Императорский массаж огнем (Мужской)</h3>
+                        <div>
+                            <div class="card-time">30 мин.</div>
+                            <div class="card-price">2900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Экзотический ритуал преображения, достойный царских особ! Этот уникальный массаж сочетает элементы восточных техник с огненной терапией. Мастер виртуозно управляет пламенем, создавая волны тепла, которые проникают глубоко в ткани, расслабляют мышцы, улучшают циркуляцию крови и активизируют обменные процессы. Процедура обладает мощным детокс-эффектом и антивозрастным эффектом.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Спа-программа «Золотой апельсин» (Мужская)</h3>
+                        <div>
+                            <div class="card-time">3ч. 30м.</div>
+                            <div class="card-price">10 900 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Расслабляющий и восстанавливающий уход для мужчин, дающий энергию и бодрость.</div>
+                    <ul class="card-list">
+                        <li>Прогревание в сауне с эфирными маслами и витаминным напитком (40 мин)</li>
+                        <li>Скрабирование всего тела (20 мин)</li>
+                        <li>Пилинг лица и кожи головы (20 мин)</li>
+                        <li>Питательная маска-обертывание (30 мин)</li>
+                        <li>Расслабляющий массаж поясницы, спины, шейно-воротниковой зоны и головы с применением ароматерапии, массаж рук и массаж стоп с аромамаслами (90 мин)</li>
+                        <li>Душевые процедуры и чай со сладким комплиментом</li>
+                    </ul>
+                    <div class="card-action">Записаться</div>
+                </a>
+            </div>
+            
+            <h3 class="subsection-title">Абонементы</h3>
+            <div class="grid" style="grid-template-columns: 1fr;">
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Абонемент на ручной массаж (10 сеансов)</h3>
+                        <div>
+                            <div class="card-time">30 мин. / 60 мин.</div>
+                            <div class="card-price">15 900 ₽ / 25 100 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-action">Записаться</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Секция: УСЛУГИ СПА -->
+        <section id="spa-services">
+            <h2 class="section-title">Услуги спа</h2>
+            <div class="grid">
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Прогревание в сауне</h3>
+                        <div>
+                            <div class="card-time">30 мин</div>
+                            <div class="card-price">850 ₽ / 1 чел.</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Глубокое прогревание тела активизирует лимфоток, раскрывает поры и готовит кожу к последующим процедурам. Идеальный старт для спа-программы и расслабления.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Прогревание в сауне + ароматерапия</h3>
+                        <div>
+                            <div class="card-time">60 мин.</div>
+                            <div class="card-price">1200 ₽ / 1 чел.</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Прогрев тела в сауне сочетается с целительной силой эфирных масел. Релакс, очищение и ароматерапевтический эффект в одном ритуале. Бамбуковые веники и вдохновляющие парения. Витаминный напиток будет полезным комплиментом.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Спа-свидание для двоих</h3>
+                        <div>
+                            <div class="card-time">3ч.</div>
+                            <div class="card-price">11 500 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Подарите заботу себе и близкому, уделитесь в момент расслабления и восстановления. Финская сауна, обливающийся общий массаж, ароматное скрабирование всего тела, обертывание с увлажняющим составом, увлажняющая маска для лица, восстанавливающая маска для волос, расслабляющий массаж, а в завершении ароматный чай со сладким комплиментом.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Спа-девичник на 4 человека</h3>
+                        <div>
+                            <div class="card-time">3,5ч.</div>
+                            <div class="card-price">17 300 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Подойдет как для проведения вечеринки с подругами так и для дня рождения или девичника. Финская сауна, обливающийся общий массаж, ароматное скрабирование всего тела, увлажняющая маска для лица, восстанавливающая маска для волос, расслабляющий массаж, а в завершении ароматный чай со сладким комплиментом.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Парение в сауне с пар мастером</h3>
+                        <div>
+                            <div class="card-time">3ч.</div>
+                            <div class="card-price">5800 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Глубокое прогревание с профессионалом.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Пилинг всего тела ароматным составом</h3>
+                        <div>
+                            <div class="card-time">20 мин.</div>
+                            <div class="card-price">1700 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Удаление ороговевших клеток и шлифовка кожи натуральным скрабом. Кожа становится гладкой и бархатистой.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Обертывание с ИК-прогреванием</h3>
+                        <div>
+                            <div class="card-time">30 мин.</div>
+                            <div class="card-price">1700 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Натуральные маски в сочетании с инфракрасным теплом усиливают детокс-эффект. Процедура выводит токсины, подтягивает и тонизирует кожу.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Спа-маска для лица</h3>
+                        <div>
+                            <div class="card-time">20 мин.</div>
+                            <div class="card-price">600 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Маска подбирается индивидуально по типу кожи — для питания, очищения или увлажнения. Уход за лицом, который дает видимый результат сразу.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Пилинг кожи головы + маска с термо-шапкой</h3>
+                        <div>
+                            <div class="card-time">30 мин.</div>
+                            <div class="card-price">1850 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Глубокое очищение кожи головы и питание волосяных луковиц. Идеально для стимуляции роста волос и улучшения их общего состояния.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Крем-парафин</h3>
+                        <div>
+                            <div class="card-time">20 мин.</div>
+                            <div class="card-price">600 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Глубоко увлажняет, смягчает и восстанавливает кожу рук или ног. Особенно рекомендовано при сухости, шелушении и переохлаждении.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Спа-ванночка для ног, молочная, с арома-маслами и морской солью</h3>
+                        <div>
+                            <div class="card-time">20 мин.</div>
+                            <div class="card-price">950 ₽</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Расслабляющая ванночка с молоком, морской солью и ароматическими маслами. Снимает усталость, смягчает кожу и дарит ощущение уюта.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Секция: АРЕНДА -->
+        <section id="rent">
+            <h2 class="section-title">Аренда</h2>
+            <div class="grid">
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Аренда рабочего места в кабинете</h3>
+                        <div>
+                            <div class="card-time">1 час</div>
+                            <div class="card-price">400 ₽ (от 2-х часов 200 ₽/час)</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Подходит для работы массажистов и других бьюти-мастеров. Входит: массажный стол, тумбочка, кольцевая лампа, стеллаж для инструментов, мокрая точка.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+
+                <a href="#contacts" class="card">
+                    <div class="card-header-flex">
+                        <h3 class="card-title">Аренда зала для мероприятий</h3>
+                        <div>
+                            <div class="card-time">1 день (до 10 чел) / 1 час</div>
+                            <div class="card-price">5000 ₽ / 800 ₽ (от 2х часов)</div>
+                        </div>
+                    </div>
+                    <div class="card-desc">Просторное, уютное помещение для мастер-классов, девичников и праздников. Есть всё необходимое для комфортного проведения мероприятий. Идеально для мини-мероприятий, тренингов и встреч. Чистое, светлое пространство в центре уюта и вдохновения.</div>
+                    <div class="card-action">Записаться</div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Контакты -->
+    <footer class="contacts" id="contacts">
+        <div class="container">
+            <h3>Предварительная запись</h3>
+            <div class="contact-links">
+                <!-- Клик по номеру откроет приложение для звонков -->
+                <a href="tel:+79003249333" class="contact-btn">
+                    📞 Раб. номер: +7 (900) 324-93-33
+                </a>
+                <!-- Клик по WhatsApp откроет приложение с готовым текстом -->
+                <a href="https://wa.me/79274977716?text=Здравствуйте!%20Хочу%20записаться%20на%20спа-процедуру." target="_blank" class="contact-btn">
+                    💬 WhatsApp / MAX: +7 927 497-77-16
+                </a>
+                <!-- Клик по Telegram откроет приложение Telegram -->
+                <a href="https://t.me/masala_spa" target="_blank" class="contact-btn">
+                    ✈️ Telegram: @masala_spa
+                </a>
+            </div>
+            <div class="footer-note">
+                Соц.сети / ТГ-канал @masala_spa <br>
+                Мы в 2ГИС и Яндекс.Картах
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
